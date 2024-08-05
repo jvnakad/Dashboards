@@ -111,6 +111,10 @@
           {
             "name": "PBI_ResultType",
             "value": "Table"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navegação"
           }
         ],
         "columns": [
@@ -528,6 +532,10 @@
         "name": "row",
         "annotations": [
           {
+            "name": "PBI_NavigationStepName",
+            "value": "Navegação"
+          },
+          {
             "name": "PBI_ResultType",
             "value": "Table"
           }
@@ -625,6 +633,10 @@
         "name": "olist_produtos",
         "annotations": [
           {
+            "name": "PBI_NavigationStepName",
+            "value": "Navegação"
+          },
+          {
             "name": "PBI_ResultType",
             "value": "Record"
           }
@@ -677,6 +689,10 @@
       {
         "name": "olist_itens_pedidos",
         "annotations": [
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navegação"
+          },
           {
             "name": "PBI_ResultType",
             "value": "Table"
@@ -742,10 +758,14 @@
               {
                 "name": "SummarizationSetBy",
                 "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
               }
             ],
             "dataType": "dateTime",
-            "formatString": "General Date",
+            "formatString": "Long Date",
             "lineageTag": "dd94c445-d857-4f73-ada0-0fb820b9d6c9",
             "sourceColumn": "shipping_limit_date",
             "summarizeBy": "none",
@@ -800,9 +820,10 @@
                 "let",
                 "    Fonte = Csv.Document(File.Contents(\"C:\\Users\\joaon\\Downloads\\PowerBI-PowerQuery-Aula1-Material\\olist_itens_pedidos.csv\"),[Delimiter=\",\", Columns=7, Encoding=1252, QuoteStyle=QuoteStyle.None]),",
                 "    #\"Cabeçalhos Promovidos\" = Table.PromoteHeaders(Fonte, [PromoteAllScalars=true]),",
-                "    #\"Tipo Alterado\" = Table.TransformColumnTypes(#\"Cabeçalhos Promovidos\",{{\"order_id\", type text}, {\"order_item_id\", Int64.Type}, {\"product_id\", type text}, {\"seller_id\", type text}, {\"shipping_limit_date\", type datetime}, {\"price\", Int64.Type}, {\"freight_value\", Int64.Type}})",
+                "    #\"Tipo Alterado\" = Table.TransformColumnTypes(#\"Cabeçalhos Promovidos\",{{\"order_id\", type text}, {\"order_item_id\", Int64.Type}, {\"product_id\", type text}, {\"seller_id\", type text}, {\"shipping_limit_date\", type datetime}, {\"price\", Int64.Type}, {\"freight_value\", Int64.Type}}),",
+                "    #\"Tipo Alterado1\" = Table.TransformColumnTypes(#\"Tipo Alterado\",{{\"shipping_limit_date\", type date}})",
                 "in",
-                "    #\"Tipo Alterado\""
+                "    #\"Tipo Alterado1\""
               ],
               "type": "m"
             }
@@ -1013,6 +1034,10 @@
       {
         "name": "tradução",
         "annotations": [
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navegação"
+          },
           {
             "name": "PBI_ResultType",
             "value": "Table"
