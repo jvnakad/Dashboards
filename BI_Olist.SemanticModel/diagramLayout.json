@@ -10,8 +10,8 @@
       "nodes": [
         {
           "location": {
-            "x": 0,
-            "y": 12
+            "x": 492,
+            "y": 0
           },
           "nodeIndex": "olist_itens_pedidos",
           "nodeLineageTag": "420d9a27-1f66-473a-93b4-ae49b72e0749",
@@ -19,12 +19,12 @@
             "height": 248,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 1
         },
         {
           "location": {
-            "x": 284,
-            "y": 72
+            "x": 505,
+            "y": 363
           },
           "nodeIndex": "olist_produtos",
           "nodeLineageTag": "41434f55-444d-44fc-86b6-a3f8b3f5e085",
@@ -32,43 +32,33 @@
             "height": 128,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 2
         },
         {
           "location": {
-            "x": 1136,
+            "x": 6,
             "y": 0
           },
           "nodeIndex": "olist_pedidos",
+          "nodeLineageTag": "5dbd1dc2-d3bf-4cce-9820-ee464a242977",
           "size": {
             "height": 272,
             "width": 234
           },
-          "zIndex": 0
+          "zIndex": 4
         },
         {
           "location": {
-            "x": 568,
-            "y": 36
+            "x": 5,
+            "y": 486
           },
           "nodeIndex": "olist_pagamentos",
+          "nodeLineageTag": "abfa1d91-5a80-4b47-a908-95ae40fb78e6",
           "size": {
             "height": 200,
             "width": 234
           },
-          "zIndex": 0
-        },
-        {
-          "location": {
-            "x": 852,
-            "y": 72
-          },
-          "nodeIndex": "traducao_status",
-          "size": {
-            "height": 128,
-            "width": 234
-          },
-          "zIndex": 0
+          "zIndex": 3
         }
       ],
       "name": "Todas as tabelas",

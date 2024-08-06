@@ -54,6 +54,30 @@
         "expression": "\"C:\\Users\\joaon\\Downloads\\Bases_Olist\\\" meta [IsParameterQuery=true, Type=\"Text\", IsParameterQueryRequired=true]",
         "kind": "m",
         "lineageTag": "172bbf62-5829-4106-9051-23825fc06846"
+      },
+      {
+        "name": "traducao_status",
+        "annotations": [
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navegação"
+          },
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "expression": [
+          "let",
+          "    Fonte = Csv.Document(File.Contents(caminhoPasta & \"tradução.csv\"),[Delimiter=\",\", Columns=2, Encoding=65001, QuoteStyle=QuoteStyle.None]),",
+          "    #\"Tipo Alterado\" = Table.TransformColumnTypes(Fonte,{{\"Column1\", type text}, {\"Column2\", type text}}),",
+          "    #\"Cabeçalhos Promovidos\" = Table.PromoteHeaders(#\"Tipo Alterado\", [PromoteAllScalars=true]),",
+          "    #\"Tipo Alterado1\" = Table.TransformColumnTypes(#\"Cabeçalhos Promovidos\",{{\"Inglês\", type text}, {\"Português \", type text}})",
+          "in",
+          "    #\"Tipo Alterado1\""
+        ],
+        "kind": "m",
+        "lineageTag": "7954fd09-5529-4b42-bc1b-989ebee23477"
       }
     ],
     "relationships": [
@@ -98,15 +122,6 @@
         "toTable": "LocalDateTable_73a6e6a9-0596-4ab2-9eb4-64d0f91d1675"
       },
       {
-        "name": "AutoDetected_d509a4e8-fd84-4d21-ab51-0af285df591e",
-        "crossFilteringBehavior": "bothDirections",
-        "fromCardinality": "one",
-        "fromColumn": "order_id",
-        "fromTable": "olist_pagamentos",
-        "toColumn": "order_id",
-        "toTable": "olist_pedidos"
-      },
-      {
         "name": "AutoDetected_9dbc1101-e2e3-4c16-bda9-af84ff7aa31f",
         "fromColumn": "order_id",
         "fromTable": "olist_itens_pedidos",
@@ -119,6 +134,13 @@
         "fromTable": "olist_itens_pedidos",
         "toColumn": "product_id",
         "toTable": "olist_produtos"
+      },
+      {
+        "name": "90ae7a7b-20be-4a7f-1c50-ae0d2f295685",
+        "fromColumn": "order_id",
+        "fromTable": "olist_pedidos",
+        "toColumn": "order_id",
+        "toTable": "olist_pagamentos"
       }
     ],
     "sourceQueryCulture": "pt-BR",
@@ -598,7 +620,7 @@
             "formatString": "0",
             "lineageTag": "9ab777b7-9c26-4a71-8e1f-97179b70b785",
             "sourceColumn": "payment_value",
-            "summarizeBy": "sum"
+            "summarizeBy": "none"
           },
           {
             "name": "payment_type",
@@ -817,6 +839,19 @@
             "lineageTag": "d87f7cf3-7ecc-42b2-8581-f5a96739f3de",
             "sourceColumn": "freight_value",
             "summarizeBy": "sum"
+          },
+          {
+            "name": "product_category_name",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "4fc17fdf-59b4-4acd-9df9-8e3c6a911709",
+            "sourceColumn": "product_category_name",
+            "summarizeBy": "none"
           }
         ],
         "lineageTag": "420d9a27-1f66-473a-93b4-ae49b72e0749",
@@ -829,69 +864,11 @@
                 "let",
                 "    Fonte = Csv.Document(File.Contents(caminhoPasta & \"olist_itens_pedidos.csv\"),[Delimiter=\",\", Columns=7, Encoding=1252, QuoteStyle=QuoteStyle.None]),",
                 "    #\"Cabeçalhos Promovidos\" = Table.PromoteHeaders(Fonte, [PromoteAllScalars=true]),",
-                "    #\"Tipo Alterado com Localidade\" = Table.TransformColumnTypes(#\"Cabeçalhos Promovidos\", {{\"price\", type number}, {\"freight_value\", type number}}, \"en-US\")",
+                "    #\"Tipo Alterado com Localidade\" = Table.TransformColumnTypes(#\"Cabeçalhos Promovidos\", {{\"price\", type number}, {\"freight_value\", type number}}, \"en-US\"),",
+                "    #\"Consultas Mescladas\" = Table.NestedJoin(#\"Tipo Alterado com Localidade\", {\"product_id\"}, olist_produtos, {\"product_id\"}, \"olist_produtos\", JoinKind.LeftOuter),",
+                "    #\"olist_produtos Expandido\" = Table.ExpandTableColumn(#\"Consultas Mescladas\", \"olist_produtos\", {\"product_category_name\"}, {\"product_category_name\"})",
                 "in",
-                "    #\"Tipo Alterado com Localidade\""
-              ],
-              "type": "m"
-            }
-          }
-        ]
-      },
-      {
-        "name": "traducao_status",
-        "annotations": [
-          {
-            "name": "PBI_NavigationStepName",
-            "value": "Navegação"
-          },
-          {
-            "name": "PBI_ResultType",
-            "value": "Table"
-          }
-        ],
-        "columns": [
-          {
-            "name": "Inglês",
-            "annotations": [
-              {
-                "name": "SummarizationSetBy",
-                "value": "Automatic"
-              }
-            ],
-            "dataType": "string",
-            "lineageTag": "73e096e3-6a25-406b-adb6-303dd5f20b3d",
-            "sourceColumn": "Inglês",
-            "summarizeBy": "none"
-          },
-          {
-            "name": "Português ",
-            "annotations": [
-              {
-                "name": "SummarizationSetBy",
-                "value": "Automatic"
-              }
-            ],
-            "dataType": "string",
-            "lineageTag": "a3f8ddbf-8fec-48fb-9bc3-427f98036f07",
-            "sourceColumn": "Português ",
-            "summarizeBy": "none"
-          }
-        ],
-        "lineageTag": "21546a88-f37e-4d8a-81df-de52a98549ac",
-        "partitions": [
-          {
-            "name": "traducao_status",
-            "mode": "import",
-            "source": {
-              "expression": [
-                "let",
-                "    Fonte = Csv.Document(File.Contents(caminhoPasta & \"tradução.csv\"),[Delimiter=\",\", Columns=2, Encoding=65001, QuoteStyle=QuoteStyle.None]),",
-                "    #\"Tipo Alterado\" = Table.TransformColumnTypes(Fonte,{{\"Column1\", type text}, {\"Column2\", type text}}),",
-                "    #\"Cabeçalhos Promovidos\" = Table.PromoteHeaders(#\"Tipo Alterado\", [PromoteAllScalars=true]),",
-                "    #\"Tipo Alterado1\" = Table.TransformColumnTypes(#\"Cabeçalhos Promovidos\",{{\"Inglês\", type text}, {\"Português \", type text}})",
-                "in",
-                "    #\"Tipo Alterado1\""
+                "    #\"olist_produtos Expandido\""
               ],
               "type": "m"
             }
