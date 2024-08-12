@@ -42,10 +42,6 @@
         "name": "caminhoPasta",
         "annotations": [
           {
-            "name": "PBI_NavigationStepName",
-            "value": "Navegação"
-          },
-          {
             "name": "PBI_ResultType",
             "value": "Text"
           }
@@ -136,11 +132,11 @@
         "toTable": "olist_produtos"
       },
       {
-        "name": "90ae7a7b-20be-4a7f-1c50-ae0d2f295685",
+        "name": "150f876f-3ce8-464a-5e64-775773ec2e8a",
         "fromColumn": "order_id",
-        "fromTable": "olist_pedidos",
+        "fromTable": "olist_pagamentos",
         "toColumn": "order_id",
-        "toTable": "olist_pagamentos"
+        "toTable": "olist_pedidos"
       }
     ],
     "sourceQueryCulture": "pt-BR",
@@ -620,7 +616,7 @@
             "formatString": "0",
             "lineageTag": "9ab777b7-9c26-4a71-8e1f-97179b70b785",
             "sourceColumn": "payment_value",
-            "summarizeBy": "none"
+            "summarizeBy": "sum"
           },
           {
             "name": "payment_type",
@@ -636,7 +632,7 @@
             "summarizeBy": "none"
           },
           {
-            "name": "Personalizar",
+            "name": "Tipo de Pagamento",
             "annotations": [
               {
                 "name": "SummarizationSetBy",
@@ -645,7 +641,7 @@
             ],
             "dataType": "string",
             "lineageTag": "5abbdabe-30d6-4588-8c29-fc2bf29c0645",
-            "sourceColumn": "Personalizar",
+            "sourceColumn": "Tipo de Pagamento",
             "summarizeBy": "none"
           }
         ],
@@ -660,9 +656,10 @@
                 "    Fonte = Xml.Tables(File.Contents(caminhoPasta & \"olist_pagamentos.xml\")),",
                 "    Table0 = Fonte{0}[Table],",
                 "    #\"Coluna Condicional Adicionada\" = Table.AddColumn(Table0, \"Personalizar\", each if [payment_type] = \"#credit_card\" then \"Cartão de Crédito\" else if [payment_type] = \"#boleto\" then \"Boleto\" else if [payment_type] = \"#voucher\" then \"Voucher\" else if [payment_type] = \"#debit_card\" then \"Cartão de Débito\" else null, type text),",
-                "    #\"Tipo Alterado com Localidade\" = Table.TransformColumnTypes(#\"Coluna Condicional Adicionada\", {{\"payment_value\", type number}}, \"en-US\")",
+                "    #\"Tipo Alterado com Localidade\" = Table.TransformColumnTypes(#\"Coluna Condicional Adicionada\", {{\"payment_value\", type number}}, \"en-US\"),",
+                "    #\"Colunas Renomeadas\" = Table.RenameColumns(#\"Tipo Alterado com Localidade\",{{\"Personalizar\", \"Tipo de Pagamento\"}})",
                 "in",
-                "    #\"Tipo Alterado com Localidade\""
+                "    #\"Colunas Renomeadas\""
               ],
               "type": "m"
             }
@@ -852,6 +849,19 @@
             "lineageTag": "4fc17fdf-59b4-4acd-9df9-8e3c6a911709",
             "sourceColumn": "product_category_name",
             "summarizeBy": "none"
+          },
+          {
+            "name": "Tipo de Pagamento",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "9f29201f-cb70-4e17-ae1d-37d642bcd83b",
+            "sourceColumn": "Tipo de Pagamento",
+            "summarizeBy": "none"
           }
         ],
         "lineageTag": "420d9a27-1f66-473a-93b4-ae49b72e0749",
@@ -866,9 +876,11 @@
                 "    #\"Cabeçalhos Promovidos\" = Table.PromoteHeaders(Fonte, [PromoteAllScalars=true]),",
                 "    #\"Tipo Alterado com Localidade\" = Table.TransformColumnTypes(#\"Cabeçalhos Promovidos\", {{\"price\", type number}, {\"freight_value\", type number}}, \"en-US\"),",
                 "    #\"Consultas Mescladas\" = Table.NestedJoin(#\"Tipo Alterado com Localidade\", {\"product_id\"}, olist_produtos, {\"product_id\"}, \"olist_produtos\", JoinKind.LeftOuter),",
-                "    #\"olist_produtos Expandido\" = Table.ExpandTableColumn(#\"Consultas Mescladas\", \"olist_produtos\", {\"product_category_name\"}, {\"product_category_name\"})",
+                "    #\"olist_produtos Expandido\" = Table.ExpandTableColumn(#\"Consultas Mescladas\", \"olist_produtos\", {\"product_category_name\"}, {\"product_category_name\"}),",
+                "    #\"Consultas Mescladas1\" = Table.NestedJoin(#\"olist_produtos Expandido\", {\"order_id\"}, olist_pagamentos, {\"order_id\"}, \"olist_pagamentos\", JoinKind.LeftOuter),",
+                "    #\"olist_pagamentos Expandido\" = Table.ExpandTableColumn(#\"Consultas Mescladas1\", \"olist_pagamentos\", {\"Tipo de Pagamento\"}, {\"Tipo de Pagamento\"})",
                 "in",
-                "    #\"olist_produtos Expandido\""
+                "    #\"olist_pagamentos Expandido\""
               ],
               "type": "m"
             }

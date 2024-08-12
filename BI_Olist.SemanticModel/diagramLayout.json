@@ -45,7 +45,7 @@
             "height": 272,
             "width": 234
           },
-          "zIndex": 4
+          "zIndex": 3
         },
         {
           "location": {
@@ -58,7 +58,7 @@
             "height": 200,
             "width": 234
           },
-          "zIndex": 3
+          "zIndex": 4
         }
       ],
       "name": "Todas as tabelas",
