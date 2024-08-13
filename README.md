@@ -1,6 +1,8 @@
 # Simulação de Ambiente ETL para Dados da Olist com Dashboard Interativo no Power BI
 
-## Descrição do Projeto
+<img class="responsive-image" align="right" style="max-width: 100%; height: auto; margin-top: 20px;" width="400" src="https://github.com/user-attachments/assets/bf57f167-71bb-47a2-95bc-8ac5c8441127" /> <div>
+
+### Descrição do Projeto
 
 Este projeto simula um ambiente de ETL (Extract, Transform, Load) utilizando o Power BI, aplicando os conceitos de extração, transformação e carregamento diretamente na ferramenta para processar dados da Olist, uma empresa de e-commerce brasileira. O resultado final é um dashboard interativo que oferece insights sobre as operações de vendas da Olist.
 
