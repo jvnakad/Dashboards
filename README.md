@@ -6,6 +6,8 @@
 
 Este projeto simula um ambiente de ETL (Extract, Transform, Load) utilizando o Power BI, aplicando os conceitos de extração, transformação e carregamento diretamente na ferramenta para processar dados da Olist, uma empresa de e-commerce brasileira. O resultado final é um dashboard interativo que oferece insights sobre as operações de vendas da Olist.
 
+Todo o processo foi realizado com base nos ensinamentos de um curso da Alura, que abordou o uso do Power BI para implementar soluções de ETL e visualização de dados.
+
 ## Estrutura do Projeto
 
 - **ETL**: Todo o processo ETL foi realizado dentro do Power BI, utilizando o Power Query para extrair, transformar e carregar os dados. As etapas incluíram a importação dos dados, a limpeza, a transformação das tabelas e a criação de relacionamentos entre elas.
@@ -37,4 +39,3 @@ Os dados utilizados no projeto são fornecidos pela Olist e estão disponíveis 
 - `data/`: Pasta contendo os datasets da Olist.
 - `BI_Olist.pbip`: Arquivo do Power BI com o dashboard interativo.
 - `README.md`: Este arquivo.
-
