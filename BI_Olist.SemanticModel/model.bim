@@ -44,10 +44,14 @@
           {
             "name": "PBI_ResultType",
             "value": "Text"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navegação"
           }
         ],
         "description": "Endereço do Diretório",
-        "expression": "\"C:\\Users\\joaon\\Downloads\\Bases_Olist\\\" meta [IsParameterQuery=true, Type=\"Text\", IsParameterQueryRequired=true]",
+        "expression": "\"C:\\Users\\joaon\\Documents\\GitHub\\Dashboards\\data\\\" meta [IsParameterQuery=true, Type=\"Text\", IsParameterQueryRequired=true]",
         "kind": "m",
         "lineageTag": "172bbf62-5829-4106-9051-23825fc06846"
       },
